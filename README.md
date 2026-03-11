@@ -5,3 +5,4 @@ AI-powered phone assistant for restaurants, cafes, and clinics. Takes food order
 ## Documents
 - [Market Research](MARKET_RESEARCH.md)
 - [Software Requirements Specification](SRS.md)
+- [Cost Analysis](COST_ANALYSIS.md)
