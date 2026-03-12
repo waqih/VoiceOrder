@@ -44,7 +44,7 @@ The system encompasses:
 - **Restaurant ordering** with menu management and POS integration
 - **Clinic appointment booking** with calendar integration
 - **Admin dashboard** for business owners to manage settings, view analytics, and monitor calls
-- **Multi-language support** (English, Hindi, expandable to regional languages)
+- **Multi-language support** (English, Urdu, expandable to regional languages)
 - **Human handoff** when AI cannot resolve the caller's request
 
 ### 1.3 Definitions & Acronyms
@@ -102,7 +102,7 @@ VoiceOrder AI is a **B2B SaaS product** that provides businesses with an AI-powe
     │ Caller  │ ──────── │  VoiceOrder AI   │ ──────── │  POS System  │
     │(Customer│  Call    │    Platform      │  Calls   │  (Square,    │
     │/Patient)│          │                  │          │   Toast,     │
-    │         │          │  ┌────────────┐  │          │   Petpooja)  │
+    │         │          │  ┌────────────┐  │          │   Oscar POS)  │
     └─────────┘          │  │ LiveKit    │  │          └──────────────┘
                          │  │ Agent      │  │
                          │  │ Pipeline   │  │          ┌──────────────┐
@@ -134,7 +134,7 @@ VoiceOrder AI is a **B2B SaaS product** that provides businesses with an AI-powe
 | Component | Requirement |
 |-----------|-------------|
 | Server | Linux (Ubuntu 22.04+), Python 3.11+, Docker |
-| Cloud | AWS (us-east-1 primary, ap-south-1 for India) |
+| Cloud | AWS (us-east-1 primary, me-south-1 for Pakistan (Middle East region)) |
 | Client (Dashboard) | Modern browser (Chrome, Firefox, Safari, Edge) |
 | Phone System | Any PSTN/mobile phone (caller side) |
 | Minimum bandwidth | 100kbps per concurrent call (server side) |
@@ -206,7 +206,7 @@ VoiceOrder AI is a **B2B SaaS product** that provides businesses with an AI-powe
      ┌────────▼───────┐  ┌───▼──────────┐  ┌────▼────────┐
      │  POS Systems   │  │  Calendar    │  │  Payment    │
      │  (Square,Toast │  │  (Google,    │  │  (Stripe,   │
-     │  Petpooja)     │  │   Cal.com)   │  │  Razorpay)  │
+     │  Oscar POS)     │  │   Cal.com)   │  │  JazzCash / Easypaisa)  │
      └────────────────┘  └──────────────┘  └─────────────┘
 ```
 
@@ -295,7 +295,7 @@ VoiceOrder AI is a **B2B SaaS product** that provides businesses with an AI-powe
 |---------|-------|
 | Model | nova-2 (or nova-3 when available) |
 | Mode | Streaming (WebSocket) |
-| Language | en-US (default), hi (Hindi), auto-detect |
+| Language | en-US (default), hi (Urdu), auto-detect |
 | Encoding | mulaw (8kHz) or linear16 (16kHz) |
 | Features | Smart formatting, keyword boosting, utterance end detection |
 | Keyword boosting | Menu item names, business name, common modifiers |
@@ -447,7 +447,7 @@ VoiceOrder AI is a **B2B SaaS product** that provides businesses with an AI-powe
 #### FR-205: POS Integration
 - **Description**: System shall push confirmed orders directly to the business's POS system
 - **Supported POS (Phase 1)**: Square, Toast
-- **Supported POS (Phase 2)**: Clover, Petpooja, POSist
+- **Supported POS (Phase 2)**: Clover, Oscar POS, OneClickPOS
 - **Data sent**: Items, quantities, modifiers, special instructions, order type (pickup/delivery), customer phone
 - **Confirmation**: POS returns order ID and estimated ready time
 - **Fallback**: If POS is unreachable, store order locally and alert staff via SMS/notification
@@ -500,7 +500,7 @@ VoiceOrder AI is a **B2B SaaS product** that provides businesses with an AI-powe
 #### FR-305: Patient Information Collection
 - **Description**: AI shall collect patient information for new patients
 - **Fields**: Full name, date of birth, phone number, email (optional), insurance provider (optional), reason for visit
-- **Privacy**: Collected data is encrypted and stored per HIPAA/DPDP requirements
+- **Privacy**: Collected data is encrypted and stored per HIPAA/PDP Bill requirements
 - **Priority**: P1 (High)
 
 #### FR-306: Appointment Reminders (Outbound)
@@ -528,11 +528,11 @@ VoiceOrder AI is a **B2B SaaS product** that provides businesses with an AI-powe
 #### FR-403: Multi-Language Support
 - **Description**: AI shall support multiple languages per business
 - **Phase 1**: English
-- **Phase 2**: English + Hindi
-- **Phase 3**: English + Hindi + Tamil + Telugu + Kannada
-- **Detection**: Auto-detect language in first 2-3 seconds, or offer language selection: "For English, press 1 or say English. Hindi ke liye 2 dabayein."
+- **Phase 2**: English + Urdu
+- **Phase 3**: English + Urdu + Sindhi + Punjabi + Pashto
+- **Detection**: Auto-detect language in first 2-3 seconds, or offer language selection: "For English, press 1 or say English. Urdu ke liye 2 dabayein."
 - **Switching**: Caller can switch language mid-call
-- **Priority**: P1 (High for Hindi), P2 (Medium for regional)
+- **Priority**: P1 (High for Urdu), P2 (Medium for regional)
 
 #### FR-404: SMS Notifications
 - **Description**: System shall send SMS notifications for key events
@@ -693,7 +693,7 @@ type            ENUM('restaurant', 'cafe', 'clinic', 'other')
 owner_id        UUID        FK -> users.id
 phone_number    VARCHAR(20) -- Twilio/Telnyx assigned number
 address         JSONB       -- {street, city, state, zip, country}
-timezone        VARCHAR(50) -- e.g., "Asia/Kolkata"
+timezone        VARCHAR(50) -- e.g., "Asia/Karachi"
 operating_hours JSONB       -- [{day, open, close}]
 language        VARCHAR(10) -- primary language code
 languages       VARCHAR[]   -- supported languages array
@@ -1123,10 +1123,11 @@ POST   /internal/agent/check-menu           -- Agent queries menu items
 | **Toast POS** | 2 | REST (API Key) | Partner API Key | Restaurant orders |
 | **Google Calendar** | 2 | REST (OAuth 2.0) | OAuth + Service Account | Appointment scheduling |
 | **Stripe** | 2 | REST | API Key | Payment processing (US) |
-| **Razorpay** | 2 | REST | API Key + Secret | Payment processing (India) |
-| **Petpooja** | 3 | REST | API Key | India POS integration |
-| **POSist** | 3 | REST | API Key | India POS integration |
-| **WhatsApp Business API** | 3 | REST | Meta Business Token | WhatsApp messaging (India) |
+| **JazzCash / Easypaisa** | 2 | REST | API Key + Secret | Payment processing (Pakistan) |
+| **Oscar POS** | 3 | REST | API Key | Pakistan POS integration |
+| **OneClickPOS** | 3 | REST | API Key | Pakistan POS integration |
+| **FBR Integration** | 3 | REST | API Key | Tax compliance for Pakistan restaurants |
+| **WhatsApp Business API** | 3 | REST | Meta Business Token | WhatsApp messaging (Pakistan) |
 
 ### 8.2 Integration Architecture
 
@@ -1146,7 +1147,7 @@ POST   /internal/agent/check-menu           -- Agent queries menu items
 │  │  ┌─────┴─────┐  ┌─────┴─────┐      │    │
 │  │  │SquareAdapter│ │GoogleCalAdapter│ │    │
 │  │  │ToastAdapter │ │CalComAdapter   │ │    │
-│  │  │PetpoojaAdptr│ │              │  │    │
+│  │  │Oscar POSAdptr│ │              │  │    │
 │  │  └───────────┘  └──────────────┘  │    │
 │  └─────────────────────────────────────┘    │
 └─────────────────────────────────────────────┘
@@ -1201,9 +1202,9 @@ Each integration follows the **Adapter pattern**: a common interface with platfo
 │          │  ┌──────────────────────┐ ┌──────────────────────┐│
 │          │  │   Peak Hours         │ │   Top Items          │ │
 │          │  │   (Heatmap)          │ │                      │ │
-│          │  │   ██░░██████░░       │ │   1. Butter Chicken  │ │
+│          │  │   ██░░██████░░       │ │   1. Chicken Biryani │ │
 │          │  │   ░░░░████████       │ │   2. Naan            │ │
-│          │  │                      │ │   3. Biryani         │ │
+│          │  │                      │ │   3. Nihari          │ │
 │          │  └──────────────────────┘ └──────────────────────┘│
 └──────────┴───────────────────────────────────────────────────┘
 ```
@@ -1482,7 +1483,7 @@ IMPLEMENTATION:
 | **Caller orders 50+ items** | "That's quite a large order! For orders over 10 items, let me connect you with our team for the best service." |
 | **Caller gives dietary restriction** | Note it as special instruction; if menu has allergen data, filter accordingly |
 | **Caller asks for recommendation** | "Our most popular items are [top 3 by order count]. Would you like to try any of these?" |
-| **Caller speaks mix of Hindi and English** | STT with multi-language model; LLM processes mixed input; respond in same language mix |
+| **Caller speaks mix of Urdu and English** | STT with multi-language model; LLM processes mixed input; respond in same language mix |
 | **Caller says just "hello" then silence** | Wait 3s, then: "Hi there! Would you like to place an order, make a reservation, or is there something else I can help with?" |
 | **Prank call detected** | After 3 nonsensical exchanges, "I don't think I'm able to help with that. Have a good day. Goodbye." End call. |
 | **Caller asks medical advice** | "I'm not able to provide medical advice. Would you like me to schedule an appointment with one of our doctors?" |
@@ -1582,7 +1583,7 @@ IMPLEMENTATION:
 | **Conversation Tests** | Custom framework | Scripted conversations with expected outcomes (like Voiceflow's test suite) |
 | **Load Tests** | Locust / k6 | Concurrent call handling, API throughput |
 | **E2E Tests** | Twilio test calls | Full call flow from dial to order placement |
-| **Accent/Language Tests** | Pre-recorded audio samples | STT accuracy across accents (Indian English, Hindi, regional) |
+| **Accent/Language Tests** | Pre-recorded audio samples | STT accuracy across accents (Pakistani English, Urdu, regional) |
 
 ### 13.3 Voice-Specific Test Cases
 
@@ -1593,8 +1594,8 @@ IMPLEMENTATION:
 | Order with modifier | "Latte with oat milk, no sugar" | AI extracts: latte, modifier: oat milk, modifier: no sugar |
 | Correction | "Actually, make that three instead of two" | AI updates quantity |
 | Unavailable item | "I want the fish tacos" (unavailable) | AI: "Sorry, fish tacos are unavailable. May I suggest..." |
-| Hindi order | "Mujhe ek butter chicken aur do naan chahiye" | AI extracts: butter chicken x1, naan x2 |
-| Hinglish mix | "Ek large pizza de do with extra cheese" | AI extracts: pizza, large, extra cheese |
+| Urdu order | "Mujhe ek butter chicken aur do naan chahiye" | AI extracts: butter chicken x1, naan x2 |
+| Urdu-English mix mix | "Ek large pizza de do with extra cheese" | AI extracts: pizza, large, extra cheese |
 | Appointment booking | "I need to see Dr. Smith next Tuesday" | AI checks availability for Dr. Smith, offers Tuesday slots |
 | Transfer request | "Let me talk to a real person" | Immediate transfer to human |
 | Noise test | Audio with background noise + order | AI extracts order correctly (>90% accuracy target) |
@@ -1604,7 +1605,7 @@ IMPLEMENTATION:
 | Metric | MVP Target | Production Target |
 |--------|-----------|-------------------|
 | Order accuracy (English) | 90% | 97% |
-| Order accuracy (Hindi) | 85% | 93% |
+| Order accuracy (Urdu) | 85% | 93% |
 | STT word error rate (clean audio) | <10% | <5% |
 | STT word error rate (noisy audio) | <20% | <12% |
 | Response latency (p50) | <1200ms | <800ms |
@@ -1621,7 +1622,7 @@ IMPLEMENTATION:
 ```
 PHASE 1 (Week 1-4): Core Voice Pipeline + Restaurant MVP
 PHASE 2 (Week 5-8): Admin Dashboard + POS Integration
-PHASE 3 (Week 9-12): Clinic Module + Hindi Support
+PHASE 3 (Week 9-12): Clinic Module + Urdu Support
 PHASE 4 (Week 13-16): Polish, Testing, Soft Launch
 PHASE 5 (Month 5+): Scale, WhatsApp, Regional Languages
 ```
@@ -1696,7 +1697,7 @@ PHASE 5 (Month 5+): Scale, WhatsApp, Regional Languages
 | Phone number provisioning | Auto-provision Twilio number in onboarding | Automated setup |
 | Integration tests | API + DB + POS integration tests | Test suite expanded |
 
-#### PHASE 3: Clinic Module + Hindi Support (Week 9-12)
+#### PHASE 3: Clinic Module + Urdu Support (Week 9-12)
 
 **Week 9: Clinic Booking**
 | Task | Detail | Deliverable |
@@ -1714,18 +1715,18 @@ PHASE 5 (Month 5+): Scale, WhatsApp, Regional Languages
 | Reschedule/cancel flow | Conversation flows for changes | Appointment management |
 | SMS reminders | Automated appointment reminders | Reminder system |
 
-**Week 11: Hindi Language Support**
+**Week 11: Urdu Language Support**
 | Task | Detail | Deliverable |
 |------|--------|-------------|
-| Deepgram Hindi config | Hindi ASR model configuration | Hindi STT working |
-| Hindi TTS voice | ElevenLabs Hindi voice selection | Hindi TTS working |
+| Deepgram Urdu config | Urdu ASR model configuration | Urdu STT working |
+| Urdu TTS voice | ElevenLabs Urdu voice selection | Urdu TTS working |
 | Language detection | Auto-detect caller language | Language switching |
-| Hindi system prompts | Translated prompts and responses | Hindi conversation flow |
+| Urdu system prompts | Translated prompts and responses | Urdu conversation flow |
 
 **Week 12: Testing & Hardening**
 | Task | Detail | Deliverable |
 |------|--------|-------------|
-| Hindi accuracy testing | Test with Indian-accent audio samples | Accuracy benchmarks |
+| Urdu accuracy testing | Test with Pakistani-accent audio samples | Accuracy benchmarks |
 | Load testing | 50+ concurrent calls | Performance validated |
 | Security audit | OWASP checks, input validation, encryption | Security hardened |
 | E2E test suite | Full call flow tests (order + booking) | Comprehensive test suite |
@@ -1752,10 +1753,10 @@ PHASE 5 (Month 5+): Scale, WhatsApp, Regional Languages
 
 | Task | Timeline |
 |------|----------|
-| India POS integration (Petpooja, POSist) | Month 5-6 |
+| Pakistan POS integration (Oscar POS, OneClickPOS) | Month 5-6 |
 | WhatsApp Business API integration | Month 5-6 |
-| Payment integration (Razorpay/Stripe) | Month 6-7 |
-| Regional languages (Tamil, Telugu, Kannada) | Month 7-9 |
+| Payment integration (JazzCash / Easypaisa/Stripe) | Month 6-7 |
+| Regional languages (Sindhi, Punjabi, Pashto) | Month 7-9 |
 | Advanced analytics & AI insights | Month 7-8 |
 | White-label platform | Month 9-12 |
 | Custom voice cloning | Month 8-10 |
@@ -1812,7 +1813,7 @@ PHASE 5 (Month 5+): Scale, WhatsApp, Regional Languages
 ```
 [Call starts - 12:34:15 PM]
 
-AI:  "Thank you for calling Spice Garden. You're speaking with our AI
+AI:  "Thank you for calling Karachi Kitchen. You're speaking with our AI
       assistant. This call may be recorded. How can I help you today?"
 
 Caller: "Hi, I'd like to place an order for pickup."
@@ -1820,23 +1821,23 @@ Caller: "Hi, I'd like to place an order for pickup."
 AI:  "Sure! I'd be happy to help you place a pickup order. What would
       you like?"
 
-Caller: "Can I get two butter chickens and one garlic naan?"
+Caller: "Can I get two chicken biryanis and one roghni naan?"
 
-AI:  "Great choice! That's 2 Butter Chicken and 1 Garlic Naan.
+AI:  "Great choice! That's 2 Chicken Biryani and 1 Roghni Naan.
       Would you like anything else?"
 
-Caller: "Hmm, do you have mango lassi?"
+Caller: "Hmm, do you have lassi?"
 
-AI:  [Tool call: check_menu("mango lassi")]
-     "Yes, we have Mango Lassi for $4.99. Would you like to add one?"
+AI:  [Tool call: check_menu("lassi")]
+     "Yes, we have Lassi for $2.99 (PKR 830). Would you like to add one?"
 
 Caller: "Yeah, make it two."
 
 AI:  "Got it. Let me read back your order:
-      - 2x Butter Chicken at $14.99 each — $29.98
-      - 1x Garlic Naan — $3.99
-      - 2x Mango Lassi at $4.99 each — $9.98
-      Your total comes to $43.95. Does that sound right?"
+      - 2x Chicken Biryani at $10.99 (PKR 3,050) each — $21.98 (PKR 6,100)
+      - 1x Roghni Naan — $1.99 (PKR 550)
+      - 2x Lassi at $2.99 (PKR 830) each — $5.98 (PKR 1,660)
+      Your total comes to $29.95 (PKR 8,310). Does that sound right?"
 
 Caller: "Yes, that's correct."
 
@@ -1844,9 +1845,9 @@ AI:  [Tool call: place_order({items: [...], order_type: "pickup"})]
      "Your order has been placed! Your order number is VO-4521.
       It'll be ready in about 25 minutes. Can I get a name for the order?"
 
-Caller: "Raj"
+Caller: "Ahmed"
 
-AI:  "Thanks, Raj! I'll send you a confirmation text.
+AI:  "Thanks, Ahmed! I'll send you a confirmation text.
       Is there anything else I can help with?"
 
 Caller: "No, that's all. Thanks!"
@@ -1893,8 +1894,11 @@ S3_BUCKET_RECORDINGS=
 
 # Payments
 STRIPE_SECRET_KEY=
-RAZORPAY_KEY_ID=
-RAZORPAY_KEY_SECRET=
+JAZZCASH_MERCHANT_ID=
+JAZZCASH_PASSWORD=
+JAZZCASH_INTEGRITY_SALT=
+EASYPAISA_STORE_ID=
+EASYPAISA_STORE_PASSWORD=
 
 # App
 APP_SECRET_KEY=

@@ -17,7 +17,7 @@
 6. [Market Opportunity & TAM/SAM/SOM](#6-market-opportunity)
 7. [Customer Pain Points](#7-customer-pain-points)
 8. [Business Model & Pricing Strategy](#8-business-model--pricing-strategy)
-9. [India Market Deep Dive](#9-india-market-deep-dive)
+9. [Pakistan Market Deep Dive](#9-pakistan-market-deep-dive)
 10. [Regulatory & Compliance Landscape](#10-regulatory--compliance-landscape)
 11. [Risks & Challenges](#11-risks--challenges)
 12. [Go-To-Market Strategy](#12-go-to-market-strategy)
@@ -36,10 +36,10 @@ The AI voice assistant market for phone-based food ordering and appointment book
 - Restaurants using AI phone agents see a **26% jump in phone order revenue** and **$3,000-$18,000 additional monthly revenue per location**
 - Only **19% of medical practices** currently use AI assistants -- indicating massive untapped potential
 - By 2026, **50%+ of restaurant interactions** will involve AI, with voice at the forefront
-- The India market (7.5M+ restaurants, 1.5M+ clinics) has **no dominant local player** and represents a significant first-mover opportunity
-- Phone ordering remains dominant in India, unlike the US where apps have partially replaced it
+- The Pakistan market ($8.1B restaurant market, growing to $15.3B by 2033) has **no dominant local player** and represents a significant first-mover opportunity
+- Phone ordering remains dominant in Pakistan, unlike the US where apps have partially replaced it
 
-**Our approach**: Build a self-orchestrated voice AI platform using open-source components (LiveKit Agents) with best-in-class STT (Deepgram), LLM (GPT-4.1/Claude), and TTS (ElevenLabs/Cartesia), connected via Twilio/Telnyx telephony. This gives us maximum control over quality, latency, and cost while enabling deep customization for the Indian market.
+**Our approach**: Build a self-orchestrated voice AI platform using open-source components (LiveKit Agents) with best-in-class STT (Deepgram), LLM (GPT-4.1/Claude), and TTS (ElevenLabs/Cartesia), connected via Twilio/Telnyx telephony. This gives us maximum control over quality, latency, and cost while enabling deep customization for the Pakistani market.
 
 ---
 
@@ -74,8 +74,8 @@ The AI voice assistant market for phone-based food ordering and appointment book
 | Patient no-show rate (average) | 18-30% |
 | Annual cost of no-shows (US) | ~$150 billion |
 | Medical practices using AI assistants | Only 19% |
-| India AI healthcare market CAGR | 30.78% (2025-2033) |
-| India AI healthcare market (projected 2033) | $4.16 billion |
+| Pakistan AI healthcare market CAGR | 30.78% (2025-2033) |
+| Pakistan AI healthcare market (projected 2033) | $4.16 billion |
 
 ### 2.4 Key Market Drivers
 
@@ -93,23 +93,23 @@ The AI voice assistant market for phone-based food ordering and appointment book
 ### 3.1 Primary Segments
 
 #### Segment A: Independent Restaurants & Cafes
-- **Size**: 660,000+ in US; 7.5M+ in India
+- **Size**: 660,000+ in US; 100,000+ formal restaurants in Pakistan
 - **Pain point**: Staff too busy to answer phones during rush; missed orders = lost revenue
-- **Willingness to pay**: $99-$399/month (US); INR 2,000-5,000/month (India)
+- **Willingness to pay**: $99-$399/month (US); PKR 5,000-15,000/month (Pakistan)
 - **Decision maker**: Owner/manager
 - **Sales cycle**: 1-2 weeks (demo + trial)
 
 #### Segment B: Restaurant Chains (5-50 locations)
-- **Size**: ~50,000 in US; growing in India
+- **Size**: ~50,000 in US; growing in Pakistan
 - **Pain point**: Inconsistent phone experience across locations; labor cost management
 - **Willingness to pay**: $199-$799/month per location
 - **Decision maker**: Operations VP / Technology Director
 - **Sales cycle**: 1-3 months
 
 #### Segment C: Clinics & Small Healthcare Practices
-- **Size**: 100,000+ in US; 1.5M+ in India
+- **Size**: 100,000+ in US; growing healthcare sector in Pakistan
 - **Pain point**: Overwhelmed front desk; patient no-shows; after-hours calls
-- **Willingness to pay**: $299-$599/month (US); INR 3,000-8,000/month (India)
+- **Willingness to pay**: $299-$599/month (US); PKR 8,000-20,000/month (Pakistan)
 - **Decision maker**: Practice manager / Clinic owner
 - **Sales cycle**: 2-4 weeks (requires compliance verification)
 
@@ -129,7 +129,7 @@ The AI voice assistant market for phone-based food ordering and appointment book
 - 1-10 locations
 - Receives 30-150+ phone calls/day
 - Currently missing 15%+ of calls
-- Uses a digital POS system (Square, Toast, Clover, Petpooja)
+- Uses a digital POS system (Square, Toast, Clover, Oscar POS)
 - Located in metro/suburban area
 - Monthly revenue: $50K-$500K per location
 
@@ -176,7 +176,7 @@ These are platforms we would build ON TOP of or compete WITH at the infrastructu
 | **Hyro AI** | Hospital systems | Appointment scheduling, Rx refills, insurance | US Enterprise |
 | **Parlance** | Healthcare call routing | Natural language call navigation | US Enterprise |
 | **Sully AI** | Medical receptionist | AI receptionist for practices | US SMB |
-| **VoiceOC** | Appointment scheduling | Multi-channel AI assistant | India/Global |
+| **VoiceOC** | Appointment scheduling | Multi-channel AI assistant | Pakistan/Global |
 
 ### 4.4 Competitive Gap Analysis
 
@@ -185,14 +185,14 @@ These are platforms we would build ON TOP of or compete WITH at the infrastructu
 | Restaurant ordering | Yes | Limited | No | Yes | **Yes** |
 | Clinic booking | No | No | Yes | No | **Yes** |
 | Multi-vertical | No | No | No | Yes | **Yes** |
-| Hindi/Indian languages | No | No | No | No | **Yes (planned)** |
-| India POS integration | No | No | No | No | **Yes (planned)** |
+| Urdu/Pakistani languages | No | No | No | No | **Yes (planned)** |
+| Pakistan POS integration (Oscar POS, FBR compliance) | No | No | No | No | **Yes (planned)** |
 | Self-hosted/control | No | No | No | No | **Yes** |
 | Open-source based | No | No | No | No | **Yes** |
 | WhatsApp integration | No | No | No | No | **Yes (planned)** |
 | Custom voice cloning | No | Yes | No | Yes | **Yes (planned)** |
 
-**Key insight**: No competitor serves the Indian market with local language support, local POS integration (Petpooja, POSist), and WhatsApp support. This is our primary differentiation opportunity.
+**Key insight**: No competitor serves the Pakistani market with local language support, local POS integration (Oscar POS, OneClickPOS), and WhatsApp support. This is our primary differentiation opportunity.
 
 ---
 
@@ -249,7 +249,7 @@ These are platforms we would build ON TOP of or compete WITH at the infrastructu
 - Standard PSTN uses **8kHz audio (G.711 codec)** -- degrades STT accuracy significantly
 - Most ASR models train on **16kHz+ audio** -- accuracy drops on telephony input
 - **Telnyx offers native 16kHz** via G.722 wideband codec (recommended)
-- Background noise, accents, and code-switching (Hinglish) compound the challenge
+- Background noise, accents, and code-switching (Urdu-English code-switching) compound the challenge
 - **Mitigation**: Use Deepgram Nova (trained on telephony audio), keyword boosting for menu items, noise suppression preprocessing
 
 ### 5.4 Latency Budget
@@ -284,14 +284,14 @@ TOTAL TARGET          | <900ms    | All components streaming
 
 ### 6.2 Serviceable Addressable Market (SAM)
 
-**India + US (Initial markets):**
+**Pakistan + US (Initial markets):**
 | Segment | # of Businesses | Potential Revenue/Year | SAM |
 |---------|----------------|----------------------|-----|
 | US Restaurants | 660,000 | $250/mo | $1.98B |
 | US Clinics | 200,000 | $350/mo | $840M |
-| India Restaurants (metro) | 500,000 | $40/mo (~INR 3,300) | $240M |
-| India Clinics (metro) | 200,000 | $50/mo (~INR 4,100) | $120M |
-| **Total SAM** | | | **~$3.18B** |
+| Pakistan Restaurants (metro) | 50,000 | $30/mo (~PKR 8,300) | $18M |
+| Pakistan Clinics (metro) | 30,000 | $40/mo (~PKR 11,000) | $14.4M |
+| **Total SAM** | | | **~$2.85B** |
 
 ### 6.3 Serviceable Obtainable Market (SOM) - Year 1-3
 
@@ -374,13 +374,13 @@ TOTAL TARGET          | <900ms    | All components streaming
 
 **Overage rate**: $0.50-$1.00 per additional call beyond plan limit.
 
-#### India Market
+#### Pakistan Market
 
 | Tier | Monthly Price | Included Calls | Target Customer |
 |------|-------------|---------------|-----------------|
-| **Starter** | INR 1,999/mo (~$24) | 300 calls | Small restaurant/cafe |
-| **Growth** | INR 3,999/mo (~$48) | 700 calls | Mid-size restaurant/clinic |
-| **Pro** | INR 7,999/mo (~$96) | 1,500 calls | Busy multi-location |
+| **Starter** | PKR 4,999/mo (~$18) | 300 calls | Small restaurant/cafe |
+| **Growth** | PKR 9,999/mo (~$36) | 700 calls | Mid-size restaurant/clinic |
+| **Pro** | PKR 19,999/mo (~$72) | 1,500 calls | Busy multi-location |
 | **Enterprise** | Custom | Unlimited | Chain/franchise |
 
 ### 8.3 Cost Structure (Per Call, Self-Hosted Stack)
@@ -419,66 +419,69 @@ TOTAL TARGET          | <900ms    | All components streaming
 
 ---
 
-## 9. India Market Deep Dive
+## 9. Pakistan Market Deep Dive
 
-### 9.1 Why India First (or Alongside US)
+### 9.1 Why Pakistan First
 
 | Factor | Detail |
 |--------|--------|
-| **Market size** | 7.5M+ restaurants, 1.5M+ clinics, 750K+ cafes |
-| **No dominant player** | Western competitors (Loman, Slang) don't serve India |
-| **Phone ordering still dominant** | Unlike US, India's restaurant phone orders are still massive |
+| **Market size** | $8.1B restaurant market (2024), growing at 7.4% CAGR to $15.3B by 2033 |
+| **No dominant player** | No AI phone ordering solution exists for Pakistani market |
+| **Phone ordering still dominant** | Phone ordering is primary channel, especially outside metro areas |
 | **WhatsApp culture** | AI handling both calls + WhatsApp = much larger market |
-| **Cost advantage** | Lower engineering costs, lower infrastructure costs |
-| **Government support** | Startup India, ABDM for healthcare, Digital India push |
-| **Language moat** | Hindi + English + regional languages = defensible advantage |
+| **Cost advantage** | Lower engineering costs, local talent pool |
+| **Government support** | National AI Policy 2025, National AI Fund (NAIF), AI Centers of Excellence |
+| **Language moat** | Urdu + English + regional languages = defensible advantage |
+| **FBR integration** | Mandatory POS integration with Federal Board of Revenue = sticky product |
 
-### 9.2 India Healthcare AI Opportunity
+### 9.2 Pakistan Healthcare AI Opportunity
 
 | Metric | Value |
 |--------|-------|
-| AI healthcare market (2024) | $333 million |
-| Projected (2033) | $4.16 billion |
-| CAGR | 30.78% |
-| GDP contribution potential | $25-30 billion by 2025 |
-| HealthTech startups (H1 2025) | 39+ new startups |
+| Digital health ventures in ecosystem | 28 ventures |
+| Digital health VC funding raised | $59.8M |
+| National AI Policy target | Training 1M AI professionals |
+| AI-driven public service projects | 50,000 planned over 5 years |
+| AI in diagnostics | Physicians using LLMs achieved 71% diagnostic reasoning scores |
 
 **Key enablers:**
-- **Ayushman Bharat Digital Mission (ABDM)**: Creating health-IDs and EHR frameworks
-- **Digital Personal Data Protection Act 2023**: Clear regulatory framework
-- **PLI Scheme for Medical Devices**: Government incentives
-- **National Health Stack**: Integration opportunities with public health delivery
+- **Pakistan National AI Policy 2025**: National framework for AI adoption and regulation
+- **Personal Data Protection Bill 2025**: Emerging regulatory framework for data protection
+- **National AI Fund (NAIF)**: Government funding for AI initiatives
+- **AI Centers of Excellence**: Building local AI talent and research capacity
 
-### 9.3 India-Specific Challenges
+### 9.3 Pakistan-Specific Challenges
 
 | Challenge | Mitigation Strategy |
 |-----------|-------------------|
-| **Extreme price sensitivity** | Start at INR 1,999/mo; freemium for first 100 calls |
-| **Hindi-English code-switching** | Fine-tune Deepgram with Hinglish data; phonetic alias dictionaries |
-| **Regional language diversity** | Start English + Hindi; add Tamil, Telugu, Kannada in phases |
-| **Internet reliability (Tier 2/3)** | Optimize for low-bandwidth; graceful degradation |
+| **Extreme price sensitivity** | Start at PKR 4,999/mo; freemium for first 100 calls |
+| **Urdu-English code-switching** | Fine-tune Deepgram with Urdu-English data; phonetic alias dictionaries |
+| **Regional language diversity** | Start English + Urdu; add Sindhi, Punjabi, Pashto in phases |
+| **Internet reliability (smaller cities)** | Optimize for low-bandwidth; graceful degradation |
 | **Trust deficit with AI** | Offer free pilot; show ROI data; human handoff always available |
-| **POS fragmentation** | Integrate with top 3 (Petpooja, POSist, UrbanPiper) first |
+| **POS fragmentation** | Integrate with top POS: Oscar POS, OneClickPOS (FBR-compliant) |
+| **Twilio doesn't offer PK numbers** | Use local SIP/VoIP providers or international numbers |
+| **Expensive international SMS** | Use local SMS APIs (Jazz, Telenor) or WhatsApp Business API |
 
-### 9.4 India Go-To-Market
+### 9.4 Pakistan Go-To-Market
 
 **Phase 1 (Month 1-6): Metro Launch**
-- Cities: Bangalore, Mumbai, Delhi NCR
+- Cities: Karachi, Lahore, Islamabad
 - Segment: English-speaking restaurants, premium clinics
-- Distribution: Direct sales + POS partnerships (Petpooja, POSist)
+- Distribution: Direct sales + POS partnerships (Oscar POS)
 - Target: 50-100 customers
 
-**Phase 2 (Month 6-12): Hindi + Expansion**
-- Add Hindi language support
-- Expand to Pune, Hyderabad, Chennai
+**Phase 2 (Month 6-12): Urdu + Expansion**
+- Add Urdu language support
+- Expand to Faisalabad, Rawalpindi, Peshawar
 - Add WhatsApp integration
-- Partner with restaurant associations (NRAI)
+- Partner with PRA (Pakistan Restaurant Association)
 - Target: 500+ customers
 
 **Phase 3 (Month 12-24): Regional Scale**
-- Add Tamil, Telugu, Kannada, Bengali
+- Add Sindhi, Punjabi, Pashto
 - Tier 2 city expansion
-- Clinic vertical launch with ABDM integration
+- Clinic vertical launch
 - White-label for POS companies
 - Target: 2,000+ customers
 
@@ -492,7 +495,7 @@ TOTAL TARGET          | <900ms    | All components streaming
 |-------------|-------------|--------------|
 | **US (Two-party consent states)** | CA, FL, IL, WA require all-party consent | Always play disclosure: "This call is handled by an AI assistant and may be recorded" |
 | **US (One-party consent states)** | NY, TX etc. -- one party sufficient | Still play disclosure (best practice) |
-| **India (IT Act + DPDP Act)** | Consent required for data processing | Hindi + English disclosure at call start |
+| **Pakistan (PECA + PDP Bill)** | Consent required; Personal Data Protection Bill 2025 pending | Urdu + English disclosure at call start |
 | **EU (GDPR)** | Explicit consent, data minimization | Disclosure + consent mechanism |
 
 **Policy**: Play AI disclosure at the start of EVERY call regardless of jurisdiction.
@@ -502,21 +505,21 @@ TOTAL TARGET          | <900ms    | All components streaming
 | Regulation | Jurisdiction | Requirements | Our Approach |
 |-----------|-------------|--------------|--------------|
 | **HIPAA** | US | BAA, encryption, access controls, audit logs | Use HIPAA-eligible cloud services; sign BAA; encrypt all PHI |
-| **DPDP Act 2023** | India | Consent for health data; data localization considerations | India-hosted servers; explicit consent; data minimization |
-| **Telemedicine Guidelines 2020** | India | Standards for remote healthcare interactions | Comply with information collection standards |
+| **PDP Bill 2025 + DRAP** | Pakistan | DRAP compliance for health devices; Personal Data Protection Bill pending; health data classified as sensitive | Pakistan-hosted servers; explicit consent; data minimization |
+| **Telemedicine regulations** | Pakistan | PMDC registration requirements for healthcare providers | Comply with PMDC registration and information collection standards |
 
 ### 10.3 Payment Compliance
 
 | Standard | Requirement | Our Approach |
 |---------|-------------|--------------|
-| **PCI-DSS** | Never process raw card data through AI | Use Twilio <Pay> or send payment link via SMS (Razorpay/Stripe) |
-| **RBI Guidelines** | India payment regulations | Integrate with Razorpay (RBI compliant) |
+| **PCI-DSS** | Never process raw card data through AI | Use Twilio <Pay> or send payment link via SMS (JazzCash/EasyPaisa/Stripe) |
+| **SBP Guidelines** | Pakistan payment regulations | Integrate with local payment gateways (SBP compliant) |
 
 ### 10.4 AI-Specific Regulations (Emerging)
 
 - EU AI Act may classify voice AI as "limited risk" requiring transparency obligations
 - Some US states considering AI disclosure requirements in commercial calls
-- India's proposed AI regulatory framework (in development)
+- Pakistan's National AI Policy 2025 and emerging regulatory framework
 - **Our approach**: Proactive transparency -- always disclose AI nature of calls
 
 ---
@@ -527,7 +530,7 @@ TOTAL TARGET          | <900ms    | All components streaming
 
 | Risk | Probability | Impact | Mitigation |
 |------|------------|--------|------------|
-| **Poor STT accuracy with Indian accents** | High | High | Fine-tune models, keyword boosting, extensive testing with Indian callers |
+| **Poor STT accuracy with Pakistani accents** | High | High | Fine-tune models, keyword boosting, extensive testing with Pakistani callers |
 | **High latency (>1.5s) breaks conversation** | Medium | Critical | Streaming architecture, fast models (Groq), co-location, filler words |
 | **LLM hallucination (wrong menu items/prices)** | Medium | High | Structured menu schema, slot-filling, confirmation loops |
 | **Telephony outage** | Low | Critical | Multi-provider failover (Twilio + Telnyx), status monitoring |
@@ -537,8 +540,8 @@ TOTAL TARGET          | <900ms    | All components streaming
 
 | Risk | Probability | Impact | Mitigation |
 |------|------------|--------|------------|
-| **Price sensitivity in India** | High | High | Freemium tier, demonstrate ROI, partner with POS for bundling |
-| **Competitor launches India product** | Medium | High | Move fast, build language moat, deepen local integrations |
+| **Price sensitivity in Pakistan** | High | High | Freemium tier, demonstrate ROI, partner with POS for bundling |
+| **Competitor launches Pakistan product** | Medium | High | Move fast, build language moat, deepen local integrations |
 | **POS integration complexity** | High | Medium | Start with 2-3 POS partners, build generic API adapter pattern |
 | **Customer churn** | Medium | Medium | Track call quality, proactive support, continuous improvement |
 | **Regulatory changes** | Low | Medium | Monitor regulatory landscape, build compliance-first |
@@ -562,7 +565,7 @@ TOTAL TARGET          | <900ms    | All components streaming
 | Activity | Detail |
 |----------|--------|
 | **Product** | Restaurant ordering MVP (English) |
-| **Market** | 1 city (Bangalore or home city) |
+| **Market** | 1 city (Karachi or home city) |
 | **Pricing** | Free pilot (2-4 weeks) then $99-199/mo |
 | **Distribution** | Direct outreach, personal network, local restaurant associations |
 | **Success criteria** | 70%+ call completion rate, 90%+ order accuracy, positive NPS |
@@ -573,10 +576,10 @@ TOTAL TARGET          | <900ms    | All components streaming
 
 | Activity | Detail |
 |----------|--------|
-| **Product** | Add clinic booking, Hindi support, POS integrations |
+| **Product** | Add clinic booking, Urdu support, POS integrations |
 | **Market** | Expand to 2-3 metros |
 | **Pricing** | Launch tiered pricing |
-| **Distribution** | POS partnerships (Petpooja, POSist), restaurant tech communities, content marketing |
+| **Distribution** | POS partnerships (Oscar POS, OneClickPOS), restaurant tech communities, content marketing |
 | **Success criteria** | <5% monthly churn, positive unit economics, $15K+ MRR |
 
 ### 12.3 Phase 3: Scale (Month 9-18)
@@ -586,7 +589,7 @@ TOTAL TARGET          | <900ms    | All components streaming
 | Activity | Detail |
 |----------|--------|
 | **Product** | Multi-language, WhatsApp, payment integration, analytics |
-| **Market** | 5+ cities in India, explore US market entry |
+| **Market** | 5+ cities in Pakistan, explore US market entry |
 | **Pricing** | Optimize tiers based on data |
 | **Distribution** | White-label for POS companies, referral programs, paid acquisition |
 | **Success criteria** | $100K+ MRR, 80%+ gross margin, clear path to profitability |
@@ -595,11 +598,11 @@ TOTAL TARGET          | <900ms    | All components streaming
 
 | Channel | Priority | CAC Estimate | Notes |
 |---------|----------|-------------|-------|
-| **POS partnerships** | High | Low ($200-500) | Petpooja, POSist serve thousands of restaurants |
+| **POS partnerships** | High | Low ($200-500) | Oscar POS, OneClickPOS serve thousands of restaurants |
 | **Direct sales** | High (Phase 1) | Medium ($800-1,500) | Needed for early validation and feedback |
 | **Content marketing** | Medium | Low ($100-300) | SEO, YouTube demos, restaurant tech blogs |
 | **Referral program** | Medium | Low ($100-200) | "Give $50, get $50" between restaurant owners |
-| **Restaurant associations** | Medium | Low ($300-500) | NRAI partnership, trade show presence |
+| **Restaurant associations** | Medium | Low ($300-500) | PRA (Pakistan Restaurant Association) partnership, trade show presence |
 | **Paid ads (Google/Meta)** | Low (Phase 3) | High ($1,000-2,000) | Only after unit economics are proven |
 
 ---
@@ -651,15 +654,15 @@ TOTAL TARGET          | <900ms    | All components streaming
 ### 14.2 Strategic Recommendations
 
 1. **Start with restaurants, add clinics later** -- restaurants have simpler workflows, fewer regulations, and faster sales cycles
-2. **India-first or India-parallel** -- the India market is underserved and offers a first-mover advantage with local language support as a moat
-3. **Build on LiveKit (open-source)** -- avoid vendor lock-in, maintain cost control, enable deep customization for Indian market needs
-4. **WhatsApp is not optional for India** -- plan integration from Phase 2; many Indian businesses already handle orders via WhatsApp
-5. **Partner with POS companies** -- this is the most efficient distribution channel; Petpooja and POSist together cover a huge portion of Indian restaurants
+2. **Pakistan-first** -- the Pakistan market is underserved and offers a first-mover advantage with local language support as a moat
+3. **Build on LiveKit (open-source)** -- avoid vendor lock-in, maintain cost control, enable deep customization for Pakistani market needs
+4. **WhatsApp is not optional for Pakistan** -- plan integration from Phase 2; many Pakistani businesses already handle orders via WhatsApp
+5. **Partner with POS companies** -- this is the most efficient distribution channel; Oscar POS and OneClickPOS together cover a huge portion of Pakistani restaurants
 6. **Focus on latency from Day 1** -- a fast, natural-sounding AI is the #1 differentiator; invest heavily in streaming architecture and optimization
 
 ### 14.3 What NOT to Do
 
-1. Don't try to serve US and India simultaneously in Phase 1 -- focus on one market for PMF
+1. Don't try to serve US and Pakistan simultaneously in Phase 1 -- focus on one market for PMF
 2. Don't build HIPAA compliance before restaurant product is stable -- it's expensive and premature
 3. Don't compete on price alone -- compete on quality, local language, and deep vertical integration
 4. Don't skip human handoff -- it's the safety net that makes businesses trust AI
@@ -675,11 +678,14 @@ TOTAL TARGET          | <900ms    | All components streaming
 - [Voice AI Restaurant Reservations 2025 Stats - Hostie AI](https://hostie.ai/resources/voice-ai-restaurant-reservations-2025-adoption-accuracy-revenue-impact)
 - [2026 Tech Forecast: Voice AI for Restaurants - FSR Magazine](https://www.fsrmagazine.com/feature/the-2026-tech-forecast-why-voice-ai-will-become-mission-critical-for-independent-restaurants/)
 - [AI Voice Agents 2025 Update - a16z (Andreessen Horowitz)](https://a16z.com/ai-voice-agents-2025-update/)
-- [AI in Indian Healthcare - IndiaAI.gov.in (2025)](https://indiaai.gov.in/article/ai-in-indian-healthcare-emerging-trends-and-opportunities-in-2025)
-- [India AI Healthcare Market Size & Growth - IMARC Group](https://www.imarcgroup.com/india-artificial-intelligence-in-healthcare-market)
-- [India Healthcare AI Transformation 2026 - OC Academy](https://www.ocacademy.in/blogs/healthcare-transformation-india-2026-outlook-ai-medtech/)
+- [Pakistan Restaurant Market Report - Growth Market Reports](https://growthmarketreports.com/report/pakistani-restaurant-market)
+- [Restaurant Industry of Pakistan - PIDE](https://pide.org.pk/research/restaurant-industry-of-pakistan-opportunities-and-market-dynamics/)
+- [Pakistan AI Policy 2025 - Startup.pk](https://www.startup.pk/a-deep-dive-into-pakistans-ai-policy-2025-vision-strategy-and-what-it-means-for-startups-and-investors/)
+- [Digital Health Laws Pakistan - ICLG](https://iclg.com/practice-areas/digital-health-laws-and-regulations/pakistan)
+- [Oscar POS Pakistan](https://oscar.pk/)
+- [FBR POS Integration](https://www.fbr.gov.pk/pos-integrated-retailers/163085/163089)
+- [Twilio Voice Pricing Pakistan](https://www.twilio.com/en-us/voice/pricing/pk)
 - [AI Chatbots in Medical Practices 2025 - MGMA](https://www.mgma.com/mgma-stat/sizing-up-the-market-for-ai-chatbots-virtual-assistants-in-medical-practices-in-2025)
-- [India AI Healthcare $650B Sector - CoinGeek](https://coingeek.com/india-bets-on-ai-to-transform-650b-healthcare-sector/)
 
 ### Competitor & Product References
 - [Loman AI - Restaurant Phone Agent](https://loman.ai/)
@@ -707,8 +713,8 @@ TOTAL TARGET          | <900ms    | All components streaming
 - [AI Receptionists Statistics 2025-2026 - Resonate App](https://www.resonateapp.com/resources/ai-receptionists-statistics)
 
 ### Regulatory
-- [India DPDP Act 2023 - MeitY](https://www.meity.gov.in)
-- [India Healthcare Innovation - World Economic Forum](https://www.weforum.org/stories/2025/04/india-healthcare-ai-innovation/)
+- [Pakistan Personal Data Protection Bill 2025](https://moitt.gov.pk/)
+- [Pakistan National AI Policy 2025](https://www.startup.pk/a-deep-dive-into-pakistans-ai-policy-2025-vision-strategy-and-what-it-means-for-startups-and-investors/)
 - [AI Contact Center Trends 2026 - Healthcare IT News](https://www.healthcareitnews.com/news/ai-contact-center-trends-watch-2026-transforming-patient-communication)
 
 ---

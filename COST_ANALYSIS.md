@@ -2,7 +2,7 @@
 
 **Document Version**: 1.0
 **Date**: March 11, 2026
-**Currency**: USD (INR equivalents noted where applicable)
+**Currency**: USD (PKR equivalents noted where applicable)
 **Status**: Research-based estimates using live pricing data
 
 ---
@@ -128,7 +128,7 @@ Source: [Deepgram Pricing](https://deepgram.com/pricing) | [Nova-3 Breakdown](ht
 |----------|-------|-----------|-----|
 | Default (best quality) | GPT-4.1 | $0.007 | Best function calling accuracy |
 | Budget mode | GPT-4.1-mini | $0.0015 | 80% quality at 20% cost |
-| High-volume India | Gemini 2.0 Flash | $0.0004 | Lowest cost, good enough for simple orders |
+| High-volume Pakistan | Gemini 2.0 Flash | $0.0004 | Lowest cost, good enough for simple orders |
 | Complex queries (fallback) | Claude Sonnet 4.5 | $0.012 | Best reasoning for edge cases |
 
 Sources: [OpenAI Pricing](https://openai.com/api/pricing/) | [GPT-4.1 Pricing](https://pricepertoken.com/pricing-page/model/openai-gpt-4.1) | [Claude Pricing](https://platform.claude.com/docs/en/about-claude/pricing)
@@ -188,19 +188,30 @@ Sources: [ElevenLabs Pricing](https://elevenlabs.io/pricing/api) | [Cartesia Pri
 
 #### Twilio (Primary)
 
-| Service | US Price | India Price |
-|---------|----------|-------------|
-| **Local phone number** | **$1.00/mo** | $1.00/mo |
+| Service | US Price | Pakistan Price |
+|---------|----------|----------------|
+| **Local phone number** | **$1.00/mo** | N/A (not available) |
 | Toll-free number | $2.00/mo | N/A |
-| **Inbound call (local)** | **$0.0085/min** | $0.0040/min |
-| Outbound call | $0.0140/min | $0.0240/min |
+| **Inbound call (local)** | **$0.0085/min** | N/A |
+| Outbound call (to Pakistan local) | $0.0140/min | $0.155/min |
+| Outbound call (to Pakistan mobile) | N/A | $0.18/min |
 | **SMS outbound (US)** | **$0.0079/msg** | N/A |
-| SMS outbound (India) | N/A | **$0.0832/msg** |
+| SMS outbound (Pakistan) | N/A | **$0.4734/msg** |
 | Media Streams (WebSocket) | Included with call | Included |
 
 **Per call cost (US, 3 min inbound)**: $0.0085 x 3 = **$0.026**
-**Per call cost (India, 3 min inbound)**: $0.0040 x 3 = **$0.012**
-**Phone number**: $1.00/mo per business
+**Per call cost (Pakistan, 3 min outbound to mobile)**: $0.18 x 3 = **$0.54** (expensive!)
+**Phone number**: $1.00/mo per business (US/UK number — no Pakistan local numbers available)
+
+> **PAKISTAN TELEPHONY NOTE:**
+> Twilio does NOT offer local Pakistan phone numbers. Options:
+> 1. Use a US/UK number — customers call an international number (common for premium services)
+> 2. Use local VoIP/SIP provider (e.g., Nayatel, PTCL smart) for local Pakistani numbers
+> 3. Route via Telnyx SIP trunking to a local Pakistan DID provider
+> 4. WhatsApp Business API as primary channel (most Pakistanis prefer WhatsApp)
+>
+> Twilio outbound to Pakistan mobile: $0.18/min (expensive)
+> Twilio SMS to Pakistan: $0.4734/msg (extremely expensive — use local SMS APIs)
 
 #### Telnyx (Budget Alternative / Failover)
 
@@ -215,7 +226,7 @@ Sources: [ElevenLabs Pricing](https://elevenlabs.io/pricing/api) | [Cartesia Pri
 
 **Recommendation**: Use **Telnyx** as primary (cheaper + better audio quality with 16kHz). Keep **Twilio** for SMS and as failover.
 
-Sources: [Twilio Voice Pricing](https://www.twilio.com/en-us/voice/pricing/us) | [Twilio SMS Pricing](https://www.twilio.com/en-us/sms/pricing/in) | [Telnyx Pricing](https://telnyx.com/pricing/voice-api)
+Sources: [Twilio Voice Pricing](https://www.twilio.com/en-us/voice/pricing/us) | [Twilio SMS Pricing (Pakistan)](https://www.twilio.com/en-us/sms/pricing/pk) | [Telnyx Pricing](https://telnyx.com/pricing/voice-api)
 
 ---
 
@@ -283,7 +294,7 @@ Sources: [AWS RDS Pricing](https://aws.amazon.com/rds/postgresql/pricing/) | [Ve
 |------|------|-----------|
 | Domain name (.ai) | $50-80/year | Annual |
 | Domain name (.com) | $10-15/year | Annual |
-| Domain name (.in) | $8-12/year | Annual |
+| Domain name (.pk) | $8-12/year | Annual |
 | SSL Certificate | $0 (Let's Encrypt / AWS ACM) | Free |
 | Email service (Google Workspace) | $6/user/mo | Monthly |
 | Error tracking (Sentry) | $0-26/mo | Monthly |
@@ -309,7 +320,7 @@ Sources: [AWS RDS Pricing](https://aws.amazon.com/rds/postgresql/pricing/) | [Ve
 
 ## 3. Per-Call Cost Breakdown
 
-### 3.1 Scenario A: Budget Stack (Recommended for MVP & India)
+### 3.1 Scenario A: Budget Stack (Recommended for MVP & Pakistan)
 
 | Component | Provider | Cost/min | Cost per 3-min call |
 |-----------|----------|----------|---------------------|
@@ -345,31 +356,33 @@ Sources: [AWS RDS Pricing](https://aws.amazon.com/rds/postgresql/pricing/) | [Ve
 | SMS confirmation | Twilio | -- | $0.008 |
 | **TOTAL** | | | **$0.074** |
 
-### 3.4 Scenario D: India-Specific
+### 3.4 Scenario D: Pakistan-Specific
 
 | Component | Provider | Cost/min | Cost per 3-min call |
 |-----------|----------|----------|---------------------|
-| Telephony | Telnyx (India) | $0.004 | $0.012 |
+| Telephony | Telnyx (Pakistan via SIP) | $0.02-0.04 | $0.06-0.12 |
 | STT | Deepgram Nova-3 | $0.0077 | $0.023 |
 | LLM | GPT-4.1-mini | $0.0005 | $0.0015 |
 | TTS | Cartesia Sonic | $0.003 | $0.009 |
 | Orchestration | LiveKit Cloud | $0.006 | $0.018 |
-| SMS confirmation | Twilio (India) | -- | $0.083 |
-| **TOTAL** | | | **$0.147** |
+| SMS confirmation | Local SMS (Jazz/Telenor API) | -- | $0.005 (~PKR 1.5) |
+| **TOTAL** | | | **$0.117-0.177** |
 
-> **Note**: India SMS via Twilio is expensive ($0.083/msg). Alternative: Use **WhatsApp Business API** ($0.005-0.02/msg) or **India SMS providers** like MSG91 (~$0.003/msg = INR 0.25).
+> **Note**: Twilio does not offer Pakistan local phone numbers. Use international numbers routed via SIP, or local VoIP providers. Twilio SMS to Pakistan is extremely expensive ($0.4734/msg). Alternative: Use **WhatsApp Business API** ($0.005-0.02/msg) or **local SMS providers** like Jazz/Telenor SMS API (~$0.005/msg = ~PKR 1.5).
 
-### 3.5 India with Local SMS Provider
+### 3.5 Pakistan with Local SMS Provider
 
 | Component | Provider | Cost per 3-min call |
 |-----------|----------|---------------------|
-| Telephony | Telnyx | $0.012 |
+| Telephony | Telnyx (Pakistan via SIP) | $0.09 |
 | STT | Deepgram Nova-3 | $0.023 |
 | LLM | GPT-4.1-mini | $0.0015 |
 | TTS | Cartesia Sonic | $0.009 |
 | Orchestration | LiveKit Cloud | $0.018 |
-| SMS confirmation | MSG91 (India) | $0.003 |
-| **TOTAL** | | **$0.067** |
+| SMS confirmation | Jazz/Telenor SMS API | $0.005 |
+| **TOTAL** | | **$0.146** |
+
+> **Note**: Twilio does not offer Pakistan local phone numbers. Use international numbers routed via SIP, or local VoIP providers.
 
 ---
 
@@ -462,7 +475,7 @@ You're building, not serving real customers yet.
 | OpenAI (mixed models) | 150K calls x $0.003 avg | $450 |
 | TTS (mixed providers) | ElevenLabs + Cartesia | $800 |
 | Telnyx (telephony) | 450K min x $0.004 (volume) | $1,800 |
-| SMS (mixed providers) | US + India | $600 |
+| SMS (mixed providers) | US + Pakistan (Jazz/Telenor API) | $600 |
 | Vercel Pro | Dashboard (5 members) | $100 |
 | Monitoring (Datadog) | Pro | $75 |
 | CDN / CloudFront | Dashboard assets | $20 |
@@ -480,10 +493,10 @@ You're building, not serving real customers yet.
 |----------|------|-------|
 | **External tools (monthly)** | ~$20-30/mo x 4 = **$80-120** | Mostly free tiers |
 | **Domain + branding** | **$60-100** | .ai domain + .com |
-| **Developer salary** (if hiring) | $2,000-5,000/mo x 4 = **$8,000-20,000** | India-based full-stack dev |
+| **Developer salary** (if hiring) | $1,500-4,000/mo x 4 = **$6,000-16,000** | Pakistan-based full-stack dev |
 | **Your own time** (if building yourself) | **$0** | Sweat equity |
 | **Total (solo founder)** | **$140-220** | |
-| **Total (with 1 hired dev)** | **$8,140-20,220** | |
+| **Total (with 1 hired dev)** | **$6,140-16,220** | |
 
 ### 5.2 First Year Total Operating Cost
 
@@ -539,7 +552,7 @@ STT is the #1 cost. At very high volume, consider self-hosting Whisper on GPU ($
 | **Use GPT-4.1-mini instead of GPT-4.1** | 80% LLM cost reduction | mini is fast enough for ordering |
 | **Use Telnyx instead of Twilio for calls** | 40-70% telephony savings | Better audio quality too (16kHz) |
 | **Use Cartesia instead of ElevenLabs** | 60-80% TTS savings | Faster latency too |
-| **Use India SMS provider (MSG91)** | 96% SMS savings in India | $0.003 vs $0.083 per msg |
+| **Use Pakistan SMS provider (Jazz/Telenor SMS API)** | 99% SMS savings in Pakistan | $0.005 vs $0.4734 per msg |
 | **LiveKit Cloud free tier** | First 3,300 calls/mo free | Covers entire soft launch |
 
 ### 7.2 Medium-Term (Month 6+)
@@ -588,7 +601,16 @@ STT is the #1 cost. At very high volume, consider self-hosting Whisper on GPU ($
 
 Even accounting for higher early costs: **5-7 customers** cover all infrastructure costs.
 
-### 8.2 Monthly P&L Projection
+### 8.2 Pakistan Market Pricing Tiers
+
+| Tier | Monthly Price |
+|------|--------------|
+| Starter | PKR 4,999/mo (~$18) |
+| Growth | PKR 9,999/mo (~$36) |
+| Pro | PKR 19,999/mo (~$72) |
+| Enterprise | Custom |
+
+### 8.3 Monthly P&L Projection
 
 | Metric | Month 6 (50 cust) | Month 12 (300 cust) | Month 18 (1,000 cust) |
 |--------|-------------------|---------------------|----------------------|
@@ -602,7 +624,7 @@ Even accounting for higher early costs: **5-7 customers** cover all infrastructu
 | **Net Profit** | $1,250 | $32,300 | $139,200 |
 | **Net Margin** | 17% | 60% | 70% |
 
-### 8.3 Annual Summary
+### 8.4 Annual Summary
 
 | Year | Revenue | Total Costs | Net Profit | Net Margin |
 |------|---------|------------|------------|------------|
@@ -638,17 +660,17 @@ Even accounting for higher early costs: **5-7 customers** cover all infrastructu
 | Buffer / contingency | $300 |
 | **Total** | **~$1,300-1,800** |
 
-### 9.3 With Hired Developer (India-based)
+### 9.3 With Hired Developer (Pakistan-based)
 
 | Item | Cost |
 |------|------|
-| Full-stack developer (4 months) | $8,000-20,000 |
+| Full-stack developer (4 months) | $6,000-16,000 |
 | All external tools (6 months) | $500 |
 | Design + branding | $500 |
 | Legal | $300 |
 | Marketing | $500 |
 | Buffer | $1,000 |
-| **Total** | **~$10,800-22,800** |
+| **Total** | **~$8,800-18,800** |
 
 ### 9.4 Recommended Budget Allocation (First 12 Months)
 
@@ -674,7 +696,7 @@ Even accounting for higher early costs: **5-7 customers** cover all infrastructu
 - [ElevenLabs API Pricing](https://elevenlabs.io/pricing/api) | [Plan Breakdown](https://flexprice.io/blog/elevenlabs-pricing-breakdown)
 - [Cartesia Pricing](https://cartesia.ai/pricing) | [Sonic 3 Review](https://www.eesel.ai/blog/cartesia-sonic-3-pricing)
 - [Twilio Voice Pricing (US)](https://www.twilio.com/en-us/voice/pricing/us)
-- [Twilio SMS Pricing (India)](https://www.twilio.com/en-us/sms/pricing/in)
+- [Twilio SMS Pricing (Pakistan)](https://www.twilio.com/en-us/sms/pricing/pk)
 - [Telnyx Voice API Pricing](https://telnyx.com/pricing/voice-api) | [SIP Trunking](https://telnyx.com/pricing/elastic-sip)
 - [LiveKit Pricing](https://livekit.com/pricing) | [Cost at Scale Analysis](https://dev.to/cloudx/how-much-does-it-really-cost-to-run-a-voice-ai-agent-at-scale-8en)
 - [AWS RDS PostgreSQL Pricing](https://aws.amazon.com/rds/postgresql/pricing/)
