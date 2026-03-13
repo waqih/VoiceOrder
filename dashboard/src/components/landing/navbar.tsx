@@ -33,10 +33,10 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="sm" render={<Link href="/login" />}>
+          <Button variant="ghost" size="sm" nativeButton={false} render={<Link href="/login" />}>
             Sign In
           </Button>
-          <Button size="sm" render={<Link href="/login" />}>
+          <Button size="sm" nativeButton={false} render={<Link href="/login" />}>
             Get Started
           </Button>
         </div>

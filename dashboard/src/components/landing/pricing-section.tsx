@@ -113,6 +113,7 @@ export function PricingSection() {
                   <Button
                     className="w-full"
                     variant={plan.popular ? "default" : "outline"}
+                    nativeButton={false}
                     render={<Link href="/login" />}
                   >
                     {plan.cta}
