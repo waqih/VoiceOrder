@@ -24,6 +24,7 @@ import {
   LogOut,
   AudioWaveform,
 } from "lucide-react";
+import { useAuth } from "@/context/auth-context";
 
 const navItems = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -35,6 +36,7 @@ const navItems = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { logout } = useAuth();
 
   return (
     <Sidebar>
@@ -84,7 +86,9 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton render={<Link href="/login" />}>
+            <SidebarMenuButton
+              onClick={logout}
+            >
               <LogOut className="h-4 w-4" />
               <span>Sign Out</span>
             </SidebarMenuButton>
