@@ -73,7 +73,7 @@ export function HeroSection() {
               transition={{ delay: 1 }}
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start"
             >
-              <Button size="lg" render={<Link href="/login" />}>
+              <Button size="lg" nativeButton={false} render={<Link href="/login" />}>
                 Get Started Free <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button variant="outline" size="lg">

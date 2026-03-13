@@ -8,6 +8,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -55,10 +56,12 @@ export function DashboardHeader() {
               }
             />
             <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuLabel>
-                <p className="text-sm font-medium">{business.ownerName}</p>
-                <p className="text-xs text-muted-foreground">{business.plan} Plan</p>
-              </DropdownMenuLabel>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>
+                  <p className="text-sm font-medium">{business.ownerName}</p>
+                  <p className="text-xs text-muted-foreground">{business.plan} Plan</p>
+                </DropdownMenuLabel>
+              </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Settings className="mr-2 h-4 w-4" /> Settings

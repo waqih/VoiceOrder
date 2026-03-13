@@ -29,7 +29,7 @@ export function CTASection() {
           </p>
           <VoiceWaveform bars={40} className="mx-auto opacity-40" />
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <Button size="lg" render={<Link href="/login" />}>
+            <Button size="lg" nativeButton={false} render={<Link href="/login" />}>
               Start Your Free Trial <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button variant="outline" size="lg">
