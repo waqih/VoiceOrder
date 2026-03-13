@@ -22,6 +22,10 @@ class Settings(BaseSettings):
     server_port: int = 8000
     server_cors_origins: str = "http://localhost:3000"
 
+    # Email (Resend)
+    resend_api_key: str = ""
+    frontend_url: str = "http://localhost:3000"
+
     # JWT
     jwt_secret_key: str = "change-me"
     jwt_algorithm: str = "HS256"

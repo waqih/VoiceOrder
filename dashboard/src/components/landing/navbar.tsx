@@ -36,7 +36,7 @@ export function Navbar() {
           <Button variant="ghost" size="sm" nativeButton={false} render={<Link href="/login" />}>
             Sign In
           </Button>
-          <Button size="sm" nativeButton={false} render={<Link href="/login" />}>
+          <Button size="sm" nativeButton={false} render={<Link href="/signup" />}>
             Get Started
           </Button>
         </div>

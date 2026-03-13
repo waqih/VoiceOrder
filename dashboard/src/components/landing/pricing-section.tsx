@@ -114,7 +114,7 @@ export function PricingSection() {
                     className="w-full"
                     variant={plan.popular ? "default" : "outline"}
                     nativeButton={false}
-                    render={<Link href="/login" />}
+                    render={<Link href="/signup" />}
                   >
                     {plan.cta}
                   </Button>

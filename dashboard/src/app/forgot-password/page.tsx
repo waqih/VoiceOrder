@@ -6,37 +6,30 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { VoiceWaveform } from "@/components/landing/voice-waveform";
-import { useAuth } from "@/lib/auth-context";
 import { api } from "@/lib/api";
-import { AudioWaveform, Loader2 } from "lucide-react";
+import { AudioWaveform, ArrowLeft, Loader2, Mail } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
-export default function LoginPage() {
-  const router = useRouter();
-  const { login } = useAuth();
+export default function ForgotPasswordPage() {
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSent, setIsSent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setIsSubmitting(true);
 
-    const formData = new FormData(e.currentTarget);
     try {
-      const data = await api<{ access_token: string }>("/auth/login", {
+      await api("/auth/forgot-password", {
         method: "POST",
-        body: {
-          email: formData.get("email"),
-          password: formData.get("password"),
-        },
+        body: { email },
       });
-      await login(data.access_token);
-      router.push("/dashboard");
+      setIsSent(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
+      setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
@@ -77,7 +70,7 @@ export default function LoginPage() {
         </motion.div>
       </div>
 
-      {/* Right: Login form */}
+      {/* Right: Form */}
       <div className="flex flex-1 items-center justify-center p-6">
         <motion.div
           initial={{ opacity: 0, x: 20 }}
@@ -94,59 +87,77 @@ export default function LoginPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl">Welcome back</CardTitle>
+              <CardTitle className="text-xl">
+                {isSent ? "Check your email" : "Forgot password?"}
+              </CardTitle>
               <p className="text-sm text-muted-foreground">
-                Sign in to your dashboard
+                {isSent
+                  ? "We've sent a password reset link to your email"
+                  : "Enter your email and we'll send you a reset link"}
               </p>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="ahmed@example.com"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="password">Password</Label>
-                    <Link
-                      href="/forgot-password"
-                      className="text-xs text-primary hover:underline"
-                    >
-                      Forgot password?
-                    </Link>
-                  </div>
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Enter your password"
-                  />
-                </div>
-
-                {error && <p className="text-xs text-destructive">{error}</p>}
-
-                <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={isSubmitting}
+              {isSent ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex flex-col items-center gap-4 py-4"
                 >
-                  {isSubmitting ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  ) : null}
-                  Sign In
-                </Button>
-              </form>
-              <p className="mt-4 text-center text-xs text-muted-foreground">
-                Don&apos;t have an account?{" "}
-                <Link href="/signup" className="text-primary hover:underline">
-                  Get started
-                </Link>
-              </p>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                    <Mail className="h-7 w-7 text-primary" />
+                  </div>
+                  <p className="text-center text-sm text-muted-foreground">
+                    We sent a reset link to <strong>{email}</strong>. Check your
+                    inbox and spam folder.
+                  </p>
+                  <Button
+                    variant="outline"
+                    className="w-full mt-2"
+                    nativeButton={false}
+                    render={<Link href="/login" />}
+                  >
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Back to login
+                  </Button>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="ahmed@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  {error && <p className="text-xs text-destructive">{error}</p>}
+
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : null}
+                    Send Reset Link
+                  </Button>
+
+                  <Button
+                    variant="ghost"
+                    className="w-full"
+                    nativeButton={false}
+                    render={<Link href="/login" />}
+                  >
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Back to login
+                  </Button>
+                </form>
+              )}
             </CardContent>
           </Card>
         </motion.div>
