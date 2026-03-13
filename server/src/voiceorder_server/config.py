@@ -12,6 +12,9 @@ class Settings(BaseSettings):
     database_url: str = (
         "postgresql+asyncpg://voiceorder:localdevpassword@postgres:5432/voiceorder"
     )
+    db_pool_size: int = 5
+    db_max_overflow: int = 5
+    db_ssl_required: bool = False
 
     # Redis
     redis_url: str = "redis://redis:6379/0"
