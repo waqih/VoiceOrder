@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import bcrypt
 from jose import JWTError, jwt
@@ -15,19 +15,35 @@ def verify_password(plain: str, hashed: str) -> bool:
 
 
 def create_access_token(sub: str) -> str:
-    expire = datetime.now(timezone.utc) + timedelta(minutes=settings.jwt_access_token_expire_minutes)
-    return jwt.encode({"sub": sub, "exp": expire}, settings.jwt_secret_key, algorithm=settings.jwt_algorithm)
+    expire = datetime.now(UTC) + timedelta(
+        minutes=settings.jwt_access_token_expire_minutes,
+    )
+    return jwt.encode(
+        {"sub": sub, "exp": expire},
+        settings.jwt_secret_key,
+        algorithm=settings.jwt_algorithm,
+    )
 
 
 def create_refresh_token(sub: str) -> str:
-    expire = datetime.now(timezone.utc) + timedelta(days=settings.jwt_refresh_token_expire_days)
-    return jwt.encode({"sub": sub, "exp": expire, "type": "refresh"}, settings.jwt_secret_key, algorithm=settings.jwt_algorithm)
+    expire = datetime.now(UTC) + timedelta(
+        days=settings.jwt_refresh_token_expire_days,
+    )
+    return jwt.encode(
+        {"sub": sub, "exp": expire, "type": "refresh"},
+        settings.jwt_secret_key,
+        algorithm=settings.jwt_algorithm,
+    )
 
 
 def decode_token(token: str) -> str | None:
     """Returns the subject (user id) or None if invalid."""
     try:
-        payload = jwt.decode(token, settings.jwt_secret_key, algorithms=[settings.jwt_algorithm])
+        payload = jwt.decode(
+            token,
+            settings.jwt_secret_key,
+            algorithms=[settings.jwt_algorithm],
+        )
         return payload.get("sub")
     except JWTError:
         return None

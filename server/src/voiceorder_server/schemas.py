@@ -3,8 +3,8 @@ from datetime import datetime
 
 from pydantic import BaseModel, EmailStr
 
-
 # --- Auth ---
+
 
 class RegisterRequest(BaseModel):
     email: EmailStr
