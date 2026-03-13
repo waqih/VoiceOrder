@@ -2,11 +2,10 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
-  useCallback,
-  type ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
@@ -20,57 +19,70 @@ interface User {
   is_active: boolean;
 }
 
-interface AuthContextType {
+interface AuthContextValue {
   user: User | null;
-  isLoading: boolean;
+  loading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  loginWithToken: (accessToken: string, refreshToken: string) => Promise<void>;
+  register: (email: string, password: string, fullName: string) => Promise<void>;
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextValue | null>(null);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const fetchUser = useCallback(async () => {
     try {
-      const data = await api<User>("/auth/me");
-      setUser(data);
+      const u = await api<User>("/api/v1/auth/me");
+      setUser(u);
     } catch {
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       setUser(null);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (token) {
-      fetchUser().finally(() => setIsLoading(false));
+      fetchUser();
     } else {
-      setIsLoading(false);
+      setLoading(false);
     }
   }, [fetchUser]);
 
   const login = async (email: string, password: string) => {
-    const res = await api<{ access_token: string; refresh_token: string }>(
-      "/auth/login",
-      {
-        method: "POST",
-        body: { email, password },
-      },
-    );
+    const res = await api<{
+      access_token: string;
+      refresh_token: string;
+    }>("/api/v1/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    });
     localStorage.setItem("access_token", res.access_token);
     localStorage.setItem("refresh_token", res.refresh_token);
     await fetchUser();
   };
 
-  const loginWithToken = async (accessToken: string, refreshToken: string) => {
-    localStorage.setItem("access_token", accessToken);
-    localStorage.setItem("refresh_token", refreshToken);
+  const register = async (
+    email: string,
+    password: string,
+    fullName: string,
+  ) => {
+    const res = await api<{
+      access_token: string;
+      refresh_token: string;
+    }>("/api/v1/auth/register", {
+      method: "POST",
+      body: JSON.stringify({ email, password, full_name: fullName }),
+    });
+    localStorage.setItem("access_token", res.access_token);
+    localStorage.setItem("refresh_token", res.refresh_token);
     await fetchUser();
   };
 
@@ -82,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, loginWithToken, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

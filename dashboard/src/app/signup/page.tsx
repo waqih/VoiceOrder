@@ -77,7 +77,7 @@ const stepVariants = {
 
 export default function SignupPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { loginWithToken } = useAuth();
 
   const [step, setStep] = useState(1);
   const [error, setError] = useState("");
@@ -114,11 +114,11 @@ export default function SignupPage() {
 
     setIsSubmitting(true);
     try {
-      const data = await api<{ access_token: string }>("/auth/register", {
+      const data = await api<{ access_token: string; refresh_token: string }>("/auth/register", {
         method: "POST",
         body: { full_name: fullName, email, password },
       });
-      await login(data.access_token);
+      await loginWithToken(data.access_token, data.refresh_token);
       setStep(2);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
@@ -147,10 +147,8 @@ export default function SignupPage() {
 
     setIsSubmitting(true);
     try {
-      const token = localStorage.getItem("token");
       await api("/businesses/", {
         method: "POST",
-        token: token || undefined,
         body: {
           name: businessName,
           type: businessType,
@@ -169,8 +167,6 @@ export default function SignupPage() {
           languages,
         },
       });
-      // Refresh user data to get business_id
-      if (token) await login(token);
       router.push("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create business");

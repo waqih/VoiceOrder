@@ -14,8 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Bell, Settings, LogOut } from "lucide-react";
-import Link from "next/link";
-import { business } from "@/data/mock-business";
+import { useAuth } from "@/context/auth-context";
 
 const breadcrumbMap: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -27,7 +26,14 @@ const breadcrumbMap: Record<string, string> = {
 
 export function DashboardHeader() {
   const pathname = usePathname();
+  const { user, logout } = useAuth();
   const title = breadcrumbMap[pathname] || "Dashboard";
+
+  const initials = user?.full_name
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase() ?? "U";
 
   return (
     <header className="flex h-14 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur-sm">
@@ -36,7 +42,9 @@ export function DashboardHeader() {
       <div className="flex flex-1 items-center justify-between">
         <div>
           <h1 className="text-sm font-semibold">{title}</h1>
-          <p className="text-[11px] text-muted-foreground">{business.name}</p>
+          <p className="text-[11px] text-muted-foreground">
+            {user?.email ?? ""}
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <button className="relative rounded-lg p-2 hover:bg-muted">
@@ -49,7 +57,7 @@ export function DashboardHeader() {
                 <button className="flex items-center gap-2 rounded-lg p-1 hover:bg-muted">
                   <Avatar className="h-7 w-7">
                     <AvatarFallback className="text-xs bg-primary text-primary-foreground">
-                      {business.ownerName.split(" ").map((n) => n[0]).join("")}
+                      {initials}
                     </AvatarFallback>
                   </Avatar>
                 </button>
@@ -58,8 +66,8 @@ export function DashboardHeader() {
             <DropdownMenuContent align="end" className="w-48">
               <DropdownMenuGroup>
                 <DropdownMenuLabel>
-                  <p className="text-sm font-medium">{business.ownerName}</p>
-                  <p className="text-xs text-muted-foreground">{business.plan} Plan</p>
+                  <p className="text-sm font-medium">{user?.full_name}</p>
+                  <p className="text-xs text-muted-foreground">{user?.role}</p>
                 </DropdownMenuLabel>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
@@ -67,7 +75,7 @@ export function DashboardHeader() {
                 <Settings className="mr-2 h-4 w-4" /> Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem render={<Link href="/login" />}>
+              <DropdownMenuItem onClick={logout}>
                 <LogOut className="mr-2 h-4 w-4" /> Sign Out
               </DropdownMenuItem>
             </DropdownMenuContent>

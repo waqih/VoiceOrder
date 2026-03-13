@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { VoiceWaveform } from "@/components/landing/voice-waveform";
 import { useAuth } from "@/lib/auth-context";
-import { api } from "@/lib/api";
 import { AudioWaveform, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,6 +15,8 @@ import { motion } from "framer-motion";
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -24,16 +25,8 @@ export default function LoginPage() {
     setError("");
     setIsSubmitting(true);
 
-    const formData = new FormData(e.currentTarget);
     try {
-      const data = await api<{ access_token: string }>("/auth/login", {
-        method: "POST",
-        body: {
-          email: formData.get("email"),
-          password: formData.get("password"),
-        },
-      });
-      await login(data.access_token);
+      await login(email, password);
       router.push("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
@@ -105,9 +98,11 @@ export default function LoginPage() {
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
-                    name="email"
                     type="email"
                     placeholder="ahmed@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
@@ -122,9 +117,11 @@ export default function LoginPage() {
                   </div>
                   <Input
                     id="password"
-                    name="password"
                     type="password"
                     placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                 </div>
 

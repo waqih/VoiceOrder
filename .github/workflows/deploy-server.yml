@@ -1,0 +1,64 @@
+name: Deploy Server
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "server/**"
+      - ".github/workflows/deploy-server.yml"
+
+concurrency:
+  group: deploy-server
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    needs: []
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+            echo "=== Pulling latest code ==="
+            cd /home/ubuntu/server
+
+            # Backup current .env
+            cp .env /tmp/.env.backup
+
+            # Pull latest server code
+            cd /tmp
+            rm -rf voiceorder-repo
+            git clone --depth 1 https://github.com/waqih/VoiceOrder.git voiceorder-repo
+
+            # Copy server files (preserve .env)
+            rsync -a --delete --exclude='.env' --exclude='.venv' --exclude='__pycache__' \
+              /tmp/voiceorder-repo/server/ /home/ubuntu/server/
+
+            # Restore .env
+            cp /tmp/.env.backup /home/ubuntu/server/.env
+
+            echo "=== Installing dependencies ==="
+            cd /home/ubuntu/server
+            /home/ubuntu/.local/bin/uv sync --no-dev
+
+            echo "=== Running migrations ==="
+            /home/ubuntu/.local/bin/uv run alembic upgrade head
+
+            echo "=== Restarting server ==="
+            sudo systemctl restart voiceorder
+            sleep 3
+
+            # Verify
+            if curl -sf http://localhost:8000/health > /dev/null; then
+              echo "=== Deploy successful! ==="
+            else
+              echo "=== DEPLOY FAILED - server not healthy ==="
+              sudo journalctl -u voiceorder --no-pager -n 20
+              exit 1
+            fi

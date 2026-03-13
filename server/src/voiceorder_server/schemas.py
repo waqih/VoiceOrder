@@ -22,6 +22,7 @@ class LoginRequest(BaseModel):
 
 class TokenResponse(BaseModel):
     access_token: str
+    refresh_token: str
     token_type: str = "bearer"
 
 
@@ -30,7 +31,7 @@ class UserResponse(BaseModel):
     email: str
     full_name: str
     role: str
-    business_id: uuid.UUID | None
+    business_id: uuid.UUID | None = None
     is_active: bool
     created_at: datetime
 

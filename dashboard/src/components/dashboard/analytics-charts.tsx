@@ -19,6 +19,7 @@ import {
   Legend,
 } from "recharts";
 
+
 const chartData = dailyVolume.map((d) => ({
   ...d,
   label: format(new Date(d.date), "MMM d"),

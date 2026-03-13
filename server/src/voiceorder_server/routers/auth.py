@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from voiceorder_server.auth import (
     create_access_token,
+    create_refresh_token,
     create_reset_token,
     decode_reset_token,
     hash_password,
@@ -42,8 +43,10 @@ async def register(body: RegisterRequest, db: AsyncSession = Depends(get_db)):
     db.add(user)
     await db.flush()
 
-    token = create_access_token(subject=str(user.id))
-    return TokenResponse(access_token=token)
+    return TokenResponse(
+        access_token=create_access_token(sub=str(user.id)),
+        refresh_token=create_refresh_token(sub=str(user.id)),
+    )
 
 
 @router.post("/login", response_model=TokenResponse)
@@ -57,8 +60,10 @@ async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)):
     if not user.is_active:
         raise HTTPException(status_code=403, detail="Account is deactivated")
 
-    token = create_access_token(subject=str(user.id))
-    return TokenResponse(access_token=token)
+    return TokenResponse(
+        access_token=create_access_token(sub=str(user.id)),
+        refresh_token=create_refresh_token(sub=str(user.id)),
+    )
 
 
 @router.get("/me", response_model=UserResponse)
