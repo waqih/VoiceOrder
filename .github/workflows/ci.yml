@@ -22,7 +22,7 @@ jobs:
       - uses: astral-sh/setup-uv@v4
         with:
           version: "latest"
-      - run: uv sync --frozen || uv sync
+      - run: uv sync --extra dev --frozen || uv sync --extra dev
       - run: uv run ruff check src/
       - run: uv run ruff format --check src/
       - run: uv run mypy src/
@@ -65,7 +65,7 @@ jobs:
       - uses: astral-sh/setup-uv@v4
         with:
           version: "latest"
-      - run: uv sync --frozen || uv sync
+      - run: uv sync --extra dev --frozen || uv sync --extra dev
       - run: uv run alembic upgrade head
       - run: uv run pytest --tb=short -q
 
@@ -80,7 +80,7 @@ jobs:
       - uses: astral-sh/setup-uv@v4
         with:
           version: "latest"
-      - run: uv sync --frozen || uv sync
+      - run: uv sync --extra dev --frozen || uv sync --extra dev
       - run: uv run ruff check src/
       - run: uv run ruff format --check src/
 
