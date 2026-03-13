@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/lib/auth-context";
 import {
   Sidebar,
   SidebarContent,
@@ -24,7 +25,6 @@ import {
   LogOut,
   AudioWaveform,
 } from "lucide-react";
-import { useAuth } from "@/context/auth-context";
 
 const navItems = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -86,9 +86,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              onClick={logout}
-            >
+            <SidebarMenuButton onClick={logout}>
               <LogOut className="h-4 w-4" />
               <span>Sign Out</span>
             </SidebarMenuButton>
