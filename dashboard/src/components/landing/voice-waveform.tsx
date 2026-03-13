@@ -7,6 +7,14 @@ interface VoiceWaveformProps {
   className?: string;
 }
 
+// Pre-compute random durations outside render to avoid impure Math.random() calls
+function makeDurations(count: number) {
+  const seed = (i: number) => ((i * 9301 + 49297) % 233280) / 233280; // deterministic PRNG
+  return Array.from({ length: count }, (_, i) => 2 + seed(i));
+}
+
+const durations = makeDurations(100);
+
 export function VoiceWaveform({ bars = 50, className = "" }: VoiceWaveformProps) {
   return (
     <div className={`flex items-center justify-center gap-[2px] ${className}`}>
@@ -29,7 +37,7 @@ export function VoiceWaveform({ bars = 50, className = "" }: VoiceWaveformProps)
               ],
             }}
             transition={{
-              duration: 2 + Math.random() * 1,
+              duration: durations[i],
               repeat: Infinity,
               ease: "easeInOut",
               delay: i * 0.03,
