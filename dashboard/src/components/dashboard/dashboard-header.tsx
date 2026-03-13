@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Bell, Settings, LogOut } from "lucide-react";
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from "@/lib/auth-context";
 
 const breadcrumbMap: Record<string, string> = {
   "/dashboard": "Dashboard",
