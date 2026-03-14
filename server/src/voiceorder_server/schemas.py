@@ -1,10 +1,10 @@
 import uuid
-from datetime import datetime
+from datetime import date, datetime
 
 from pydantic import BaseModel, EmailStr, Field
 
+from voiceorder_server.models.appointment import AppointmentStatus
 from voiceorder_server.models.business import BusinessType
-
 
 # ── Auth ────────────────────────────────────────────────
 
@@ -87,8 +87,69 @@ class BusinessResponse(BaseModel):
     address: dict | None
     operating_hours: dict | None
     languages: list[str] | None
+    greeting_text: str | None = None
+    transfer_numbers: list[str] | None = None
     subscription_tier: str
     is_active: bool
     created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+# ── Providers ──────────────────────────────────────────
+
+
+class ProviderResponse(BaseModel):
+    id: uuid.UUID
+    name: str
+    title: str | None = None
+    specialization: str | None = None
+    services: list[str] | None = None
+    is_active: bool
+
+    model_config = {"from_attributes": True}
+
+
+# ── Appointments ───────────────────────────────────────
+
+
+class AvailabilitySlot(BaseModel):
+    time: str
+    available: bool = True
+
+
+class AppointmentCreate(BaseModel):
+    business_id: uuid.UUID
+    provider_id: uuid.UUID
+    patient_name: str = Field(min_length=1, max_length=255)
+    patient_phone: str = Field(min_length=5, max_length=20)
+    service_type: str = Field(min_length=1, max_length=100)
+    date: date
+    time: str = Field(pattern=r"^\d{2}:\d{2}$")
+    notes: str | None = None
+
+
+class AppointmentResponse(BaseModel):
+    id: uuid.UUID
+    provider_id: uuid.UUID
+    patient_id: uuid.UUID
+    service_type: str
+    scheduled_at: datetime
+    duration_minutes: int
+    status: AppointmentStatus
+    notes: str | None = None
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+# ── FAQ ────────────────────────────────────────────────
+
+
+class FAQResponse(BaseModel):
+    id: uuid.UUID
+    question: str
+    answer: str
+    category: str | None = None
 
     model_config = {"from_attributes": True}

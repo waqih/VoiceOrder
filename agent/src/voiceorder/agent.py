@@ -24,27 +24,27 @@ from livekit.agents.voice import MetricsCollectedEvent
 from livekit.plugins import cartesia, deepgram, google, silero
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 
-from voiceorder.prompts import RESTAURANT_SYSTEM_PROMPT
-from voiceorder.tools import RestaurantTools
+from voiceorder.prompts import HOSPITAL_SYSTEM_PROMPT
+from voiceorder.tools import HospitalTools
 
 load_dotenv()
 
 logger = logging.getLogger("voiceorder")
 
 
-class RestaurantAgent(RestaurantTools):
-    """Voice agent for Bella's Kitchen restaurant phone ordering."""
+class HospitalAgent(HospitalTools):
+    """Voice agent for clinic/hospital phone reception."""
 
     def __init__(self) -> None:
         super().__init__(
-            instructions=RESTAURANT_SYSTEM_PROMPT,
+            instructions=HOSPITAL_SYSTEM_PROMPT,
         )
 
     async def on_enter(self) -> None:
         """Called when a caller connects. Generate the initial greeting."""
         self.session.generate_reply(
             instructions="Greet the caller warmly. Say something like: "
-            "'Hi, thanks for calling Bella's Kitchen! How can I help you today?'"
+            "'Thank you for calling CarePoint Medical Center. How may I help you today?'"
         )
 
 
@@ -89,7 +89,7 @@ async def entrypoint(ctx: JobContext) -> None:
 
     # --- Start the session ---
     await session.start(
-        agent=RestaurantAgent(),
+        agent=HospitalAgent(),
         room=ctx.room,
         room_options=room_io.RoomOptions(
             audio_input=room_io.AudioInputOptions(),
