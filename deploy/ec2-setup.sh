@@ -58,13 +58,17 @@ DB_MAX_OVERFLOW=5
 SERVER_DEBUG=false
 SERVER_HOST=0.0.0.0
 SERVER_PORT=8000
-SERVER_CORS_ORIGINS=http://localhost:3000
+SERVER_CORS_ORIGINS=https://voice-order-beta.vercel.app,http://localhost:3000
 
 # === JWT (generate with: openssl rand -hex 32) ===
 JWT_SECRET_KEY=CHANGE_ME_RUN_openssl_rand_hex_32
 JWT_ALGORITHM=HS256
 JWT_ACCESS_TOKEN_EXPIRE_MINUTES=15
 JWT_REFRESH_TOKEN_EXPIRE_DAYS=7
+
+# === Email (Resend - https://resend.com) ===
+RESEND_API_KEY=
+FRONTEND_URL=https://voice-order-beta.vercel.app
 ENVEOF
     chown "$APP_USER:$APP_USER" "$APP_DIR/.env"
     echo "  Created $APP_DIR/.env — EDIT THIS with your Neon credentials!"

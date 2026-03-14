@@ -8,10 +8,10 @@ import { RecentOrdersList } from "@/components/dashboard/recent-orders-list";
 import { KPI } from "@/data/types";
 
 const kpis: KPI[] = [
-  { label: "Total Calls", value: 347, change: 12.5, icon: "phone" },
-  { label: "Orders Placed", value: 234, change: 8.2, icon: "orders" },
-  { label: "Revenue", value: 156400, change: 15.3, prefix: "PKR ", icon: "revenue" },
-  { label: "AI Completion", value: 94, change: 2.1, suffix: "%", icon: "ai" },
+  { label: "Total Calls", value: 0, change: 0, icon: "phone" },
+  { label: "Orders Placed", value: 0, change: 0, icon: "orders" },
+  { label: "Revenue", value: 0, change: 0, prefix: "PKR ", icon: "revenue" },
+  { label: "AI Completion", value: 0, change: 0, suffix: "%", icon: "ai" },
 ];
 
 export default function DashboardHome() {
