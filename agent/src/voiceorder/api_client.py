@@ -52,5 +52,39 @@ class VoiceOrderAPI:
         resp.raise_for_status()
         return resp.json()
 
+    async def create_call(
+        self,
+        business_id: uuid.UUID,
+        caller_phone: str | None = None,
+        called_number: str | None = None,
+    ) -> dict:
+        resp = await self._client.post(
+            "/api/v1/calls",
+            json={
+                "business_id": str(business_id),
+                "caller_phone": caller_phone,
+                "called_number": called_number,
+                "direction": "inbound",
+                "status": "active",
+            },
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+    async def update_call(
+        self,
+        call_id: uuid.UUID,
+        status: str | None = None,
+        duration_seconds: int | None = None,
+    ) -> dict:
+        payload: dict = {}
+        if status is not None:
+            payload["status"] = status
+        if duration_seconds is not None:
+            payload["duration_seconds"] = duration_seconds
+        resp = await self._client.patch(f"/api/v1/calls/{call_id}", json=payload)
+        resp.raise_for_status()
+        return resp.json()
+
     async def close(self) -> None:
         await self._client.aclose()

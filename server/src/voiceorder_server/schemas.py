@@ -5,6 +5,7 @@ from pydantic import BaseModel, EmailStr, Field
 
 from voiceorder_server.models.appointment import AppointmentStatus
 from voiceorder_server.models.business import BusinessType
+from voiceorder_server.models.call import CallDirection, CallStatus
 
 # ── Auth ────────────────────────────────────────────────
 
@@ -151,5 +152,38 @@ class FAQResponse(BaseModel):
     question: str
     answer: str
     category: str | None = None
+
+    model_config = {"from_attributes": True}
+
+
+# ── Calls ─────────────────────────────────────────────
+
+
+class CallCreate(BaseModel):
+    business_id: uuid.UUID
+    caller_phone: str | None = None
+    called_number: str | None = None
+    direction: CallDirection = CallDirection.INBOUND
+    status: CallStatus = CallStatus.ACTIVE
+
+
+class CallUpdate(BaseModel):
+    status: CallStatus | None = None
+    duration_seconds: int | None = None
+    intent_detected: str | None = None
+    outcome: str | None = None
+
+
+class CallResponse(BaseModel):
+    id: uuid.UUID
+    business_id: uuid.UUID
+    caller_phone: str | None = None
+    called_number: str | None = None
+    direction: CallDirection
+    status: CallStatus
+    duration_seconds: int | None = None
+    intent_detected: str | None = None
+    outcome: str | None = None
+    created_at: datetime
 
     model_config = {"from_attributes": True}
