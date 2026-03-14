@@ -33,7 +33,7 @@ async def seed() -> None:
             print("Demo data already exists, skipping seed.")
             return
 
-        # Create demo owner user
+        # Create demo owner user (without business_id first to avoid circular FK)
         result = await session.execute(
             select(User).where(User.id == DEMO_OWNER_ID)
         )
@@ -44,10 +44,10 @@ async def seed() -> None:
                 full_name="Demo Admin",
                 hashed_password="not-a-real-hash",
                 role=UserRole.OWNER,
-                business_id=DEMO_BUSINESS_ID,
                 is_active=True,
             )
             session.add(owner)
+            await session.flush()
 
         # Create demo hospital business
         business = Business(
@@ -78,6 +78,14 @@ async def seed() -> None:
             is_active=True,
         )
         session.add(business)
+        await session.flush()
+
+        # Link user to business
+        result = await session.execute(
+            select(User).where(User.id == DEMO_OWNER_ID)
+        )
+        owner = result.scalar_one()
+        owner.business_id = DEMO_BUSINESS_ID
 
         # Create providers
         providers = [
