@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -36,4 +38,15 @@ async def create_business(
 
     user.business_id = business.id
 
+    return business
+
+
+@router.get("/{business_id}", response_model=BusinessResponse)
+async def get_business(
+    business_id: uuid.UUID,
+    db: AsyncSession = Depends(get_db),
+):
+    business = await db.get(Business, business_id)
+    if not business:
+        raise HTTPException(status_code=404, detail="Business not found")
     return business

@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from voiceorder_server.config import settings
-from voiceorder_server.routers import auth, businesses
+from voiceorder_server.routers import appointments, auth, businesses, faq, providers
 
 
 @asynccontextmanager
@@ -33,6 +33,9 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(businesses.router)
+app.include_router(appointments.router)
+app.include_router(providers.router)
+app.include_router(faq.router)
 
 
 @app.get("/health")
