@@ -10,7 +10,7 @@ API_BASE = os.environ.get("VOICEORDER_API_URL", "http://localhost:8000")
 
 class VoiceOrderAPI:
     def __init__(self) -> None:
-        self._client = httpx.AsyncClient(base_url=API_BASE, timeout=10.0)
+        self._client = httpx.AsyncClient(base_url=API_BASE, timeout=10.0, follow_redirects=True)
 
     async def get_providers(
         self, business_id: uuid.UUID, specialization: str | None = None

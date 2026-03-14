@@ -57,7 +57,7 @@ class HospitalAgent(HospitalTools):
 
 # --- Server setup ---
 
-server = AgentServer(name="hospital-agent")
+server = AgentServer()
 
 
 def prewarm(proc: JobProcess) -> None:
@@ -68,7 +68,7 @@ def prewarm(proc: JobProcess) -> None:
 server.setup_fnc = prewarm
 
 
-@server.rtc_session()
+@server.rtc_session(agent_name="hospital-agent")
 async def entrypoint(ctx: JobContext) -> None:
     """Called for each new phone call / room session."""
 
