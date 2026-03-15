@@ -8,12 +8,15 @@ Run in production mode:
 """
 
 import logging
+import os
 import time
 import uuid
 
 from dotenv import load_dotenv
 
-from livekit.agents import (
+load_dotenv()
+
+from livekit.agents import (  # noqa: E402
     AgentServer,
     AgentSession,
     JobContext,
@@ -22,16 +25,14 @@ from livekit.agents import (
     metrics,
     room_io,
 )
-from livekit.agents.voice import MetricsCollectedEvent
-from livekit.plugins import cartesia, deepgram, google, silero
-from livekit.plugins.turn_detector.multilingual import MultilingualModel
-from livekit.rtc import ParticipantKind
+from livekit.agents.voice import MetricsCollectedEvent  # noqa: E402
+from livekit.plugins import cartesia, deepgram, openai, silero  # noqa: E402
+from livekit.plugins.turn_detector.multilingual import MultilingualModel  # noqa: E402
+from livekit.rtc import ParticipantKind  # noqa: E402
 
-from voiceorder.api_client import VoiceOrderAPI
-from voiceorder.prompts import HOSPITAL_SYSTEM_PROMPT
-from voiceorder.tools import HospitalTools
-
-load_dotenv()
+from voiceorder.api_client import VoiceOrderAPI  # noqa: E402
+from voiceorder.prompts import HOSPITAL_SYSTEM_PROMPT  # noqa: E402
+from voiceorder.tools import HospitalTools  # noqa: E402
 
 logger = logging.getLogger("voiceorder")
 
@@ -74,7 +75,11 @@ async def entrypoint(ctx: JobContext) -> None:
 
     session = AgentSession(
         stt=deepgram.STT(model="nova-3", language="en"),
-        llm=google.LLM(model="gemini-2.5-flash"),
+        llm=openai.LLM(
+            model="accounts/fireworks/models/glm-5",
+            base_url="https://api.fireworks.ai/inference/v1",
+            api_key=os.environ.get("FIREWORKS_API_KEY", ""),
+        ),
         tts=cartesia.TTS(model="sonic-3"),
         vad=ctx.proc.userdata["vad"],
         turn_detection=MultilingualModel(),
